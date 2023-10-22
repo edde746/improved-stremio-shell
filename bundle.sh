@@ -11,12 +11,6 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     BUNDLE_NAME="stremio.app"
     BINARY_NAME="stremio"
-    rm -rf "$BUNDLE_NAME"
-
-    mkdir -p "$BUNDLE_NAME/Contents/MacOS"
-    mkdir -p "$BUNDLE_NAME/Contents/Frameworks"
-    cp $BINARY_NAME "$BUNDLE_NAME/Contents/MacOS"
-    cp Info.plist "$BUNDLE_NAME/Contents"
 
     if [ ! -f ffmpeg ]; then
         echo "downloading ffmpeg"
@@ -57,6 +51,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 
     echo "extract dylibs"
     tar -xf dylibs.tar -C "$BUNDLE_NAME/Contents/Frameworks"
+    cp -r "$BUNDLE_NAME/Contents/Frameworks/dylibs/"* "$BUNDLE_NAME/Contents/Frameworks"
+    rm -rf "$BUNDLE_NAME/Contents/Frameworks/dylibs"
     echo "fix dylibs"
     files=$(tar -tf dylibs.tar)
     for file in $files; do
