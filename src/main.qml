@@ -270,7 +270,7 @@ ApplicationWindow {
         // print applicationDirPath like this:
         console.log("Application dir path: "+applicationDirPath)
         var node_executable = applicationDirPath + "/node"
-        if (Qt.platform.os === "windows") node_executable = applicationDirPath + "/stremio-runtime.exe"
+        if (Qt.platform.os === "windows") node_executable = applicationDirPath + "/node.exe"
         streamingServer.start(node_executable, 
             [applicationDirPath +"/server.js"].concat(Qt.application.arguments.slice(1)), 
             "EngineFS server started at "

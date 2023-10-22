@@ -17,9 +17,17 @@ mac {
     QMAKE_RPATHDIR += @executable_path/lib
 }
 
-QT_CONFIG -= no-pkg-config
-CONFIG += link_pkgconfig debug
-PKGCONFIG += mpv
+!win32 {
+    QT_CONFIG -= no-pkg-config
+    CONFIG += link_pkgconfig
+    PKGCONFIG += mpv
+}
+
+win32 {
+    INCLUDEPATH += ./build/mpv/include
+    LIBS += -LC:build/mpv/ -lmpv
+    RC_ICONS = $$PWD/images/stremio.ico
+}
 
 SOURCES += src/main.cpp \
     src/mpv.cpp \
@@ -39,3 +47,6 @@ HEADERS += src/main.h \
 DESTDIR = ./build
 OBJECTS_DIR = ./build/obj
 MOC_DIR = ./build/moc
+RCC_DIR = build/.rcc
+UI_DIR = build/.ui
+QMAKE_VCXPROJ_OUTPUT_DIR = $$OUT_PWD/build
