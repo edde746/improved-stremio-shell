@@ -6,3 +6,4 @@ release/
 debug/
 stremio_resource.rc
 Output/
+dependencies/

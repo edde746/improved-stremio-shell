@@ -24,8 +24,8 @@ mac {
 }
 
 win32 {
-    INCLUDEPATH += ./build/mpv/include
-    LIBS += -LC:build/mpv/ -lmpv
+    INCLUDEPATH += ./dependencies/mpv/include
+    LIBS += -L$$PWD/dependencies/mpv/ -lmpv
     RC_ICONS = $$PWD/images/stremio.ico
 }
 
@@ -49,4 +49,3 @@ OBJECTS_DIR = ./build/obj
 MOC_DIR = ./build/moc
 RCC_DIR = build/.rcc
 UI_DIR = build/.ui
-QMAKE_VCXPROJ_OUTPUT_DIR = $$OUT_PWD/build
