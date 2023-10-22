@@ -25,6 +25,17 @@ if host_machine.system() == 'darwin'
   dependencies += declare_dependency(
     link_args : ['-framework', 'IOKit', '-framework', 'CoreFoundation'],
   )
+
+  plist = configuration_data()
+  plist.set('VERSION', meson.project_version())
+  plist.set('EXECUTABLE', meson.project_name())
+  plist.set('IDENTIFIER', 'com.company.' + meson.project_name())
+
+  configure_file(
+    input: 'mac/Info.plist',
+    output: 'Info.plist',
+    configuration: plist
+  )
 endif
 
 executable(
@@ -33,6 +44,5 @@ executable(
   qtprocessed,
   dependencies: dependencies,
   include_directories: [src_dir],
-  gui_app: true,
-  install: true
+  gui_app: true
 )
