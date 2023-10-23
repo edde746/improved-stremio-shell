@@ -2,10 +2,7 @@ name: Build
 on: [workflow_dispatch]
 jobs:
   build-osx:
-    strategy:
-      matrix:
-        os: [macos-latest, macos-latest-xlarge]
-    runs-on: ${{ matrix.os }}
+    runs-on: "macos-latest"
     steps:
       - uses: actions/checkout@v3
       - name: Install Qt
@@ -36,7 +33,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: osx-dmg-${{ matrix.os == 'macos-latest-xlarge' && 'arm' || 'intel' }}
+          name: osx-dmg-intel
           path: Stremio.dmg
   build-windows:
     runs-on: windows-latest
