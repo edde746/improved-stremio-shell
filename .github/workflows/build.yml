@@ -2,7 +2,10 @@ name: Build
 on: [workflow_dispatch]
 jobs:
   build-osx:
-    runs-on: "macos-latest"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, macos-latest-xlarge]
     steps:
       - uses: actions/checkout@v3
       - name: Install Qt
@@ -30,10 +33,16 @@ jobs:
         run: ./bundle.sh
       - name: Create DMG
         run: npm_config_yes=true npx appdmg mac/dmg.json Stremio.dmg
+      - name: Set artifact name
+        if: matrix.os == 'macos-latest-xlarge'
+        run: echo "ARTIFACT_NAME=osx-dmg-silicon" >> $GITHUB_ENV
+      - name: Set artifact name
+        if: matrix.os == 'macos-latest'
+        run: echo "ARTIFACT_NAME=osx-dmg-intel" >> $GITHUB_ENV
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: osx-dmg-intel
+          name: ${{ env.ARTIFACT_NAME }}
           path: Stremio.dmg
   build-windows:
     runs-on: windows-latest
